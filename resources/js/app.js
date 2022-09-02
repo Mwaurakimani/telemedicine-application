@@ -8,8 +8,19 @@ import { InertiaProgress } from '@inertiajs/progress';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { Link } from "@inertiajs/inertia-vue3";
+import { createPinia } from "pinia/dist/pinia";
 
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Telementary Application';
+
+//global components
+import dashboardLayout from "./Layouts/DashboardLayout.vue";
+import dashboardPageHeading from "./Layouts/Dashboard/dashboardPageHeading.vue";
+
+
+const pinia = createPinia()
+
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Telemedicine Application';
+
+
 
 const application = createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -18,8 +29,11 @@ const application = createInertiaApp({
         return createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
+            .use(pinia)
             .mixin({
                 components: {
+                    Layout:dashboardLayout,
+                    dashboardPageHeading,
                     Link
                 }
             })
