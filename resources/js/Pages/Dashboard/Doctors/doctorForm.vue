@@ -5,13 +5,21 @@
 
         <button @click.prevent="create_doctor()" class="button-fill p-[10px] m-[20px] ml-[30px]" >Create</button>
 
-        <div id="doctor_form" class=" p-[15px] dashboard-main-content-default">
-            <div class="dual-section" style="height: fit-content">
+        <div id="doctor_form" class=" p-[15px] dashboard-main-content-default"  >
+            <div class="dual-section" style="height: fit-content;">
                 <user-card :mode="mode" :user_form="doctor"
                     class="
-                h-[350px]
+                h-[480px]
                 min-w-[600px]"
                 >
+                    <template v-slot:doctor_practice>
+                        <div  class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Practice</span>
+                            <input v-model="doctor.practice" type="text" autocomplete="off" class="form-control"
+                                   placeholder="Practice" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                    </template>
+
                     <template v-slot:ratings_section>
                         <div class="ratting-section">
                             <h5>Rating</h5>
@@ -86,19 +94,11 @@ export default {
         return {
             mode:'edit_mode',
             doctor:this.$inertia.form({
-                //dummy data
-                // name: 'dummp name',
-                // email: 'dummyemai@emal.com',
-                // phone: '070000000',
-                // address: 'Nairobi CBD',
-                // date_of_birth: '2022-03-05',
-                // gender: 'Male',
-                // bio: 'Lorem imsum'
-
                 name: null,
                 email: null,
                 phone: null,
                 address: null,
+                practice: null,
                 date_of_birth: null,
                 gender: null,
                 bio: null,
@@ -135,5 +135,17 @@ export default {
         padding-left: 20px;
     }
 
+}
+
+.details-section {
+    span, label {
+        width: 100px;
+    }
+
+    .input-group {
+        input, select, textarea {
+            border: 1px solid #d2d0d0;
+        }
+    }
 }
 </style>

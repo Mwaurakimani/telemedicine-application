@@ -4,58 +4,29 @@
         </dashboard-page-heading>
         <div class="notification_panel">
             <div class="list-panel">
-                <div v-for="item in 20" class="user-chat-card">
-                    <div class="image-tab">
-
+                <Link as="div" v-for="item in all_conversations" class="user-chat-card" :href="route('select_conversation',[item.id])" >
+                    <div class="image-tab" style="overflow: hidden">
+                        <img :src="item.patients.profile_photo_url" alt="">
                     </div>
                     <div class="description-tab">
-                        <h4>Username</h4>
-                        <p>Lorem ipsum dolor sit...</p>
+                        <h4>{{ item.patients.name }}</h4>
                     </div>
-                </div>
+                </Link>
             </div>
-            <div class="message-panel">
+            <div v-if="message.to != null" class="message-panel">
                 <div class="message-banner">
-                    <p>Username</p>
+                    <p>{{ active_conversation.patients.name }}</p>
                 </div>
-                <div class="message-body">
-                    <div class="message-box">
-                        <div class="text-bubble">
-                            <p>Message test ....</p>
-
-                        </div>
-                        <span>8/5/2022 01:20 pm</span>
-                    </div>
-                    <div class="message-box">
-                        <div class="text-bubble">
-                            <p>Message test ....</p>
-
-                        </div>
-                        <span>8/5/2022 01:20 pm</span>
-                    </div>
-                    <div class="message-box">
-                        <div class="text-bubble">
-                            <p>Message test ....</p>
-
-                        </div>
-                        <span>8/5/2022 01:20 pm</span>
-                    </div>
-                    <div class="message-box">
-                        <div class="text-bubble">
-                            <p>Message test ....</p>
-
-                        </div>
-                        <span>8/5/2022 01:20 pm</span>
-                    </div>
-                    <div class="message-box right-align">
+                <div class="message-body pb-100px " id="msg-body">
+                    <div v-for="mes in messages"  :class="['message-box',mes.from == $attrs.user.id ? 'right-align' : '']">
                         <div class="text-bubble ">
-                            <p>Message test ....</p>
+                            <p>{{ mes.text }}</p>
                         </div>
-                        <span>8/5/2022 01:20 pm</span>
+                        <span>{{ mes.created_at }}</span>
                     </div>
                 </div>
-                <form @submit.prevent="" class="chat-entry">
-                    <textarea>
+                <form @submit.prevent="send_message" class="chat-entry">
+                    <textarea v-model="message.text" >
 
                     </textarea>
                     <button class="button-fill">Send</button>
@@ -68,7 +39,33 @@
 <script>
 export default {
     name: "notificationsHome",
-    mounted(){
+    props:['active_conversation','all_conversations'],
+    data(){
+        return {
+            message: {
+                text: null,
+                to:this.active_conversation ? this.active_conversation.patients.id : null,
+                conversation_id : this.active_conversation ? this.active_conversation.id : null
+            },
+            messages:this.active_conversation ? this.active_conversation.messages.reverse() : null
+        }
+    },
+    methods:{
+        send_message(){
+            axios.post(route('send_message'),this.message).then((res) => {
+                this.messages = res.data.reverse()
+
+                this.message.text = ""
+
+                const theElement = document.getElementById('msg-body');
+
+                const scrollToBottom = (node) => {
+                    node.scrollTop = node.scrollHeight;
+                }
+
+                scrollToBottom(theElement);
+            })
+        }
     }
 }
 </script>
@@ -89,6 +86,7 @@ export default {
         padding-top: 10px;
         width: 300px;
         height: 100%;
+        overflow: auto;
 
         .user-chat-card{
             width: 90%;
@@ -146,7 +144,8 @@ export default {
         }
         .message-body{
             width: 100%;
-            height: calc(100% - 120px);
+            overflow: auto;
+            height: calc(100% - 130px);
 
             .message-box{
                 width: 100%;

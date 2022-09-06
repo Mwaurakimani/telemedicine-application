@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\App;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -58,4 +59,37 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    public function doctors_appointment()
+    {
+        return $this->hasMany(Appointment::class,'doctor_id','id');
+    }
+
+    public function patient_appointment()
+    {
+        return $this->hasMany(Appointment::class,'patient_id','id');
+    }
+
+    public function patient_conversation()
+    {
+        return $this->hasMany(conversation::class,'patient_id','id');
+    }
+
+    public function doctor_conversation()
+    {
+        return $this->hasMany(conversation::class,'doctor_id','id');
+    }
+
+    public function doctor(){
+        return $this->hasManyThrough(User::class,conversation::class,'patient_id','id','id','doctor_id');
+    }
+
+//    public function doctor_patient(){
+//        return $this->hasManyThrough(User::class,Appointment::class,'doctor_id','patient_id','id','id');
+//    }
+//
+//    public function patient_doctor(){
+//        return $this->hasManyThrough(User::class,Appointment::class);
+//    }
 }

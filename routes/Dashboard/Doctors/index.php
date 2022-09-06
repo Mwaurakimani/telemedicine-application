@@ -22,3 +22,12 @@ Route::post('/doctors/create',
 )->name('post_doctor');
 
 
+Route::post('/doctors/update',
+    [DoctorsController::class, 'put_doctor']
+)->name('put_doctor');
+
+Route::post('/doctors/updatePassword',
+    [DoctorsController::class, 'update_password']
+)->name('update_password');
+
+

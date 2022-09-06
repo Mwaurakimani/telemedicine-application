@@ -1,5 +1,5 @@
 <template>
-    <div class="user-card white_container_card" :class="[mode == 'edit_mode' ? 'user-entry-card' : '']">
+    <div  class="user-card white_container_card" :class="[mode == 'edit_mode' ? 'user-entry-card' : '']">
         <div class="image-section">
             <div class="image-display">
                 <img v-if="user_form.id == null || user_form.profile_photo_path == null"
@@ -17,6 +17,7 @@
             <div v-if="mode == 'view_mode'" class="sect-1">
                 <h1>{{ user_form.name }}</h1>
                 <h3>{{ user_form.email }}</h3>
+                <p v-if="user_form && user_form.account_type == 'Doctor'"  style="color: #00B4CF" >{{ user_form.practice }}</p>
             </div>
             <div v-else class="sect-1">
                 <div class="input-group mb-3">
@@ -29,6 +30,9 @@
                     <input v-model="user_form.email" type="text" autocomplete="off" class="form-control"
                            placeholder="email" aria-label="Username" aria-describedby="basic-addon1">
                 </div>
+                <slot name="doctor_practice" >
+
+                </slot>
             </div>
             <slot v-if="mode == 'view_mode' " name="ratings_section"></slot>
             <div class="sect-2">
@@ -152,7 +156,7 @@ export default {
 }
 
 .user-entry-card {
-    height: 420px;
+    height: 470px;
     padding-right: 10px;
     align-items: flex-start;
     padding-top: 20px;

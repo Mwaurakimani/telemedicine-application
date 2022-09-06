@@ -1,9 +1,7 @@
 <template>
     <Layout>
         <dashboard-page-heading :pageTitle="'Dashboard'">
-            <template>
-                his
-            </template>
+
         </dashboard-page-heading>
     </Layout>
 </template>

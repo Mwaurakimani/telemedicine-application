@@ -18,7 +18,7 @@ use Illuminate\Validation\ValidationException;
 |
 */
 
-Route::middleware(['auth:sanctum','apiCors'])->get('/logout', function (Request $request) {
+Route::middleware(['auth:sanctum', 'apiCors'])->get('/logout', function (Request $request) {
     $user = Auth::user();
 
     return $user;
@@ -35,7 +35,7 @@ Route::post('/sanctum/token', function (Request $request) {
 
     $user = User::where('email', $request->email)->first();
 
-    if (! $user || ! Hash::check($request->password, $user->password)) {
+    if (!$user || !Hash::check($request->password, $user->password)) {
         throw ValidationException::withMessages([
             'email' => ['The provided credentials are incorrect.'],
         ]);
@@ -48,6 +48,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::middleware('apiCors')->get('/logout', function (Request $request) {
-//    return dd("hi");
-//});
+
+Route::middleware([
+    'auth:sanctum',
+    'apiCors',
+])->group(function () {
+    require 'API/appointmentAPI.php';
+    require 'API/profile.php';
+    require 'API/conversations.php';
+});
+
+
+//apis with no authorization
+
+Route::middleware([
+    'apiCors',
+])->group(function () {
+    Route::post('/searchDoctor', [\App\Http\Controllers\AppointmentController::class, 'searchDoctor']);
+    Route::get('/appointment/{id}',[\App\Http\Controllers\AppointmentController::class,'fetch_appointment_by_id']);
+    Route::get('/getDoctors',[\App\Http\Controllers\DoctorsController::class,'get_doctors']);
+    Route::get('/getDoctors/{id}',[\App\Http\Controllers\DoctorsController::class,'get_doctor_by_id']);
+
+});
+

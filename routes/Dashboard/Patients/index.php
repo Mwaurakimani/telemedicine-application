@@ -19,3 +19,16 @@ Route::get('/patients/create',
 Route::post('/patients/create',
     [PatientsController::class, 'store']
 )->name('post_patient');
+
+
+Route::get('/patients/create/chat/{id}',
+    [PatientsController::class, 'create_chat']
+)->name('initiate_chat');
+
+Route::get('/patients/edit/{id}',
+    [PatientsController::class, 'update_patient']
+)->name('update_patient');
+
+Route::post('/patients/edit/{id}',
+    [PatientsController::class, 'put_patient']
+)->name('put_patient');

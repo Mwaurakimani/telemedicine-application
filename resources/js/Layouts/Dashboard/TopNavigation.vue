@@ -19,8 +19,8 @@
                 </div>
             </div>
         </div>
-        <div class="account-action-section">
-
+        <div class="account-action-section flex justify-end ">
+            <button class="app-btn" @click="logout">Log out</button>
         </div>
     </section>
 </template>

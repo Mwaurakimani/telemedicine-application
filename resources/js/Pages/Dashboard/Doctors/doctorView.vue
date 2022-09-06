@@ -27,16 +27,16 @@
                     </div>
                 </section-card>
             </div>
-            <div class="dual-section">
-                <section-card style="max-width:600px" :heading="'Basic Information'">
-                    <div class="w-[600px]">
+<!--            <div class="dual-section">-->
+<!--                <section-card style="max-width:600px" :heading="'Basic Information'">-->
+<!--                    <div class="w-[600px]">-->
 
-                    </div>
-                </section-card>
-                <section-card style="flex-grow: 1;margin-left: 20px" :heading="'Stats'">
+<!--                    </div>-->
+<!--                </section-card>-->
+<!--                <section-card style="flex-grow: 1;margin-left: 20px" :heading="'Stats'">-->
 
-                </section-card>
-            </div>
+<!--                </section-card>-->
+<!--            </div>-->
         </div>
     </Layout>
 </template>

@@ -5,5 +5,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/settings', function () {
-    return Inertia::render('Dashboard/Settings/index');
+    $user = \Illuminate\Support\Facades\Auth::user();
+
+    return Inertia::render('Dashboard/Settings/index',[
+        'account' => $user
+    ]);
 })->name('open_settings');

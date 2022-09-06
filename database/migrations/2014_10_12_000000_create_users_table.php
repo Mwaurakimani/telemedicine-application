@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone')->nullable ();
             $table->string('date_of_birth')->nullable ();
             $table->string('address')->nullable ();
+            $table->string('practice')->nullable ();
             $table->string('gender')->nullable ();
             $table->string('account_type')->default('none');
             $table->text('notes')->nullable ();

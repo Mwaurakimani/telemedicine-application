@@ -3,19 +3,24 @@
         <dashboard-page-heading :pageTitle="'Appointments'">
             <template v-slot:action_buttons >
                 <ul class="action-btn-holder" >
-
                     <Link
                         v-for="btn in page_heading_action_buttons"
                         as="li"
                         :href="btn.href"
                         class="page-heading-action-btn button-outline"
                     >{{ btn.title }}</Link>
+
+                    <li
+                        as="li"
+                        @click="update_appointment"
+                        class="page-heading-action-btn button-outline"
+                    >Update</li>
                 </ul>
             </template>
         </dashboard-page-heading>
         <div id="appointments-view" class="dashboard-main-content-default">
             <div class="dual-section">
-                <user-card></user-card>
+                <user-card :user_form="appointment.patient"></user-card>
                 <section-card :heading="'Appointment Details'">
                     <div class="sect-2 appointment-details">
                         <div class="entry">
@@ -27,30 +32,40 @@
                             <p>3/4/2022</p>
                         </div>
                         <div class="entry">
-                            <label for="">StatusStatus :</label>
-                            <p>Confirmed</p>
+                            <label for="">Status :</label>
+                            <select class="w-[100%] ml-[60px] p-[0px] pl-[5px] h-[30px]" v-model="appointment_form.status">
+                                <option value="pending">pending</option>
+                                <option value="accepted">accepted</option>
+                                <option value="rejected">rejected</option>
+                            </select>
                         </div>
                     </div>
                 </section-card>
             </div>
             <div class="dual-section">
                 <section-card :heading="'Summary'">
-                    <p class="p-[20px]" style="font-size: 0.9em">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus dicta dolorem enim,
-                        est exercitationem minima tempora unde. A, accusantium architecto corporis cum deserunt
-                        dignissimos enim expedita facere itaque iusto laborum laudantium neque odit quam quasi
-                        quibusdam quisquam ratione reiciendis repudiandae sed temporibus, voluptas voluptatum?
-                        Accusamus adipisci aliquid amet aspernatur commodi consequatur cumque dignissimos dolor
-                        ipsam nisi officiis provident quo quos tempore voluptates.</p>
+                    <textarea class="w-[100%]" style="height: calc(100% - 30px);border:1px solid lightgrey" v-model="appointment.more_info.summary">
+
+                    </textarea>
                 </section-card>
                 <section-card :heading="'Prescription'">
-                <textarea style="width: 100%; height: 85%;border: 1px solid grey;border-radius: 8px" >
+                    <textarea class="w-[100%]" style="height: calc(100% - 30px);border:1px solid lightgrey" v-model="appointment.more_info.prescription">
 
-                </textarea>
+                    </textarea>
                 </section-card>
             </div>
             <div class="dual-section">
-                <section-card :heading="'Reports'">
+                <section-card v-if="appointment != null" :heading="'Reports'">
+                    <div class="input-entry mb-[20px] ">
+                        <label class="m-[10px] mr-[50px]">Upload report</label>
+                        <input type="file" @input="form_file.file = $event.target.files[0]">
+                        <button class="app-btn" @click="upload_file">Upload</button>
+                    </div>
+                    <div v-if="appointment.reports.length > 0" class="display-reports ">
+                        <ul class="flex" style="justify-content: space-around; flex-wrap: wrap"  >
+                            <li  v-for="(report,index) in appointment.reports" style="background-color: #00B4CF; cursor:pointer; color: white;border-radius: 8px" class="p-[6px] m-[5px];" :title="report.file_path" @click="download_report(report.id)"> Report {{ index + 1 }}</li>
+                        </ul>
+                    </div>
                 </section-card>
             </div>
         </div>
@@ -59,9 +74,11 @@
 <script>
 import userCard from "../../../AppComponents/userCard.vue";
 import sectionCard from "../../../AppComponents/sectionCard.vue";
+import axios from "axios";
 
 export default {
     name: 'view-appointment',
+    props:['appointment'],
     components:{
         userCard,
         sectionCard
@@ -73,11 +90,26 @@ export default {
                     title: "List Appointments",
                     href: route('list_appointments')
                 },
-            ]
+            ],
+            appointment_form: this.$inertia.form({
+                ...this.appointment
+            }),
+            form_file: this.$inertia.form({
+                id:this.appointment ? this.appointment.id : null,
+                file:null
+            })
         }
     },
-    mounted(){
-        this.$store.commit('set_active_tab','Appointments')
+    methods:{
+        update_appointment(){
+            this.appointment_form.post(route('update_appointment',[this.appointment.id]));
+        },
+        upload_file(){
+            this.form_file.post(route('upload_report'))
+        },
+        download_report(report_id){
+            window.open(route('download_report',[report_id]), '_blank');
+        }
     }
 }
 </script>
