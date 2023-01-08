@@ -58,6 +58,8 @@ export default {
     padding: 15px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    &>div{
+        margin: 0px 10px;
+    }
 }
 </style>

@@ -7,6 +7,7 @@ use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 trait appointmentApi
 {
@@ -17,22 +18,22 @@ trait appointmentApi
 
     public function patient_book_appointment(Request $request)
     {
-        $datetime = new DateTime($request['appointment']['datetime']);
-        $date = $datetime->format('Y-m-d');
-        $time = $datetime->format('H:i:s');
+
+        $date = $request['date'];
+        $time = $request['time'];
 
         $user = Auth::user();
         $appointment = new Appointment();
 
         $appointment->patient_id = $user->id;
-        $appointment->doctor_id = $request['appointment']['doctor_id'];
+        $appointment->doctor_id = $request['doctor_id'];
         $appointment->appointment_dte = $date;
         $appointment->appointment_time = $time;
         $appointment->status = 'pending';
 
         $appointment->save();
 
-        return $request;
+        return Redirect::to('/');
     }
 
     public function fetch_appointment(Request $request)

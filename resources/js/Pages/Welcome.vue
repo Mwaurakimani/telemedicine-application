@@ -2,14 +2,6 @@
     <div class="nav-bar flex items-center h-[50px]" style="justify-content: space-between" >
         <h2 class="ml-[20px] text-white" style="line-height: 50px;font-size: 1.3em" >{{ "Telementary Application" }}</h2>
         <div class="linker">
-            <ul class="flex align-middle text-white">
-                <li class="linker mx-[10px]">
-                    <Link>Services</Link>
-                </li>
-                <li class="linker mx-[10px]">
-                    <Link>Practitioners</Link>
-                </li>
-            </ul>
         </div>
         <div class="user-details mr-[20px]">
             <Link as="button"  :href="route('dashboard')"  class="app-btn rounded mx-[10px]" v-if="$attrs.user != null">Dashboard</Link>
@@ -46,7 +38,6 @@
             </form>
             <div class="button-section">
                 <button class="button-fill" @click.prevent="submit" >Sign In</button>
-                <Link>Forgot password</Link>
             </div>
         </div>
     </div>
@@ -135,6 +126,17 @@ export default {
             button{
                 padding: 10px 20px;
             }
+        }
+    }
+}
+@media only screen and (max-width: 425px){
+    .main-content-display{
+        display: flex;
+        padding: 0px;
+        justify-content: center;
+        align-items: center;
+        .sign-in-form{
+            width: 300px;
         }
     }
 }

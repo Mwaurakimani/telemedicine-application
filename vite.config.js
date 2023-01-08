@@ -9,6 +9,17 @@ export default defineConfig({
             input: 'resources/js/app.js',
             refresh: true,
         }),
+        {
+            name:'backend',
+            handleHotUpdate({file, server}) {
+                if(file.endsWith('.php')){
+                    server.ws.send({
+                        type:'full-reload',
+                        path: '*'
+                    })
+                }
+            }
+        },
         vue({
             template: {
                 transformAssetUrls: {

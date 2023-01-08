@@ -22,16 +22,14 @@
                 <br>
                 <p>{{ appointment.doctors.address }}</p>
             </div>
-            <div class="doctor-rating">
-                <p>4.5</p>
-            </div>
+
         </div>
         <div class="appointment_card-footer">
             <div class="patient-details">
                 <div class="icon_view">
                     <img src="/storage/systemFiles/icons/users.png" alt="">
                 </div>
-                <p>Mr {{ appointment.patient.name }}</p>
+                <p>{{ appointment.patient.name }}</p>
                 |
                 <p>Age : {{ getAge(appointment.patient.date_of_birth) }}Y</p>
             </div>
@@ -44,7 +42,59 @@
 <script>
 export default {
     name: 'appointment-card',
-    props: ['appointment'],
+    props: {
+        appointment:{
+            type:Object,
+            default:{
+                id:1,
+                patient_id:4,
+                doctor_id:3,
+                appointment_dte:"2022-09-09",
+                appointment_time:"15:28:00",
+                status:"accepted",
+                created_at:"2022-09-04T12:29:03.000000Z",
+                updated_at:"2023-01-06T11:40:10.000000Z",
+                doctors:{
+                    account_type:"Doctor",
+                    address:"Nairobi CBD",
+                    created_at:"2022-09-04T11:28:14.000000Z",
+                    date_of_birth:"2022-09-04",
+                    email:"doctorone@email.com",
+                    email_verified_at:null,
+                    gender:"Male",
+                    id:3,
+                    name:"Doctor",
+                    notes:"This is doctor one bio",
+                    phone:"0700000000",
+                    practice:"Gynacologist",
+                    profile_photo_path:null,
+                    profile_photo_url:"https://ui-avatars.com/api/?name=D&color=7F9CF5&background=EBF4FF",
+                    two_factor_confirmed_at:null,
+                    updated_at:"2022-09-05T17:55:23.000000Z",
+
+                },
+                patient:{
+                    account_type:"Patient",
+                    address:"Kiambu CBD",
+                    created_at:"2022-09-04T11:30:42.000000Z",
+                    date_of_birth:"2022-09-04",
+                    email:"patientone@email.com",
+                    email_verified_at:null,
+                    gender:"Male",
+                    id:4,
+                    name:"Patient 1",
+                    notes:"This is patient 12",
+                    phone:"0700000000",
+                    practice:null,
+                    profile_photo_path:null,
+                    profile_photo_url:"https://ui-avatars.com/api/?name=P+1&color=7F9CF5&background=EBF4FF",
+                    two_factor_confirmed_at:null,
+                    updated_at:"2022-09-05T17:47:07.000000Z",
+
+                },
+            }
+        }
+    },
     computed: {
         appointment_date() {
             var options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
@@ -237,3 +287,6 @@ export default {
 
 }
 </style>
+
+
+

@@ -30,4 +30,8 @@ Route::post('/doctors/updatePassword',
     [DoctorsController::class, 'update_password']
 )->name('update_password');
 
+Route::post('/doctors/getByName',function (\Illuminate\Http\Request $request){
+    return \App\Models\User::where('name','LIKE',"%${request['name']}%")->where('account_type','Doctor')->get();
+})->name('get_doctor_by_name');
+
 

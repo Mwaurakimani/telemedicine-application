@@ -52,30 +52,7 @@
                     </div>
                 </section-card>
             </div>
-            <div class="dual-section" style="height: 300px">
-                <section-card style="max-width:800px" :heading="'Security'">
-                    <div class="w-[auto]">
-                        <form @submit.prevent="change_password" class="admin_form">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text w-[200px]" id="basic-addon1">Current Password</span>
-                                <input v-model="passwordForm.current_password" type="password" autocomplete="off" class="form-control" placeholder="Current password"
-                                       aria-label="Username" aria-describedby="basic-addon1">
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text w-[200px]" id="basic-addon1">New Password</span>
-                                <input v-model="passwordForm.new_password" type="password" autocomplete="off" class="form-control" placeholder="New Password"
-                                       aria-label="Username" aria-describedby="basic-addon1">
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text w-[200px]" id="basic-addon1">Confirm New Password</span>
-                                <input v-model="passwordForm.confirm_current_password" type="password" autocomplete="off" class="form-control" placeholder="New Password"
-                                       aria-label="Username" aria-describedby="basic-addon1">
-                            </div>
-                            <button class="button-fill p-[10px] block m-[auto]">Update Password</button>
-                        </form>
-                    </div>
-                </section-card>
-            </div>
+           
         </div>
     </Layout>
 </template>

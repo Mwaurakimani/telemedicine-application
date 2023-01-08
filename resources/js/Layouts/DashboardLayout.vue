@@ -6,6 +6,9 @@
             <slot></slot>
         </section>
     </div>
+    <div class="mobile-view">
+        <slot name="mobile"></slot>
+    </div>
 </template>
 
 <script>
@@ -27,6 +30,9 @@ export default {
         rerender_component(){
             this.componentKey = !this.componentKey
         },
+    },
+    mounted() {
+        console.log(this.$attrs)
     }
 }
 </script>
@@ -71,6 +77,12 @@ export default {
         width: 400px;
         background-color: red;
 
+    }
+}
+
+@media only screen and (max-width: 425px){
+    #dashboard-display{
+        display: none;
     }
 }
 </style>

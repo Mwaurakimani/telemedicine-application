@@ -14,9 +14,9 @@
                 <Link :href="route('list_doctors')" :class="[navigation.$state.active_tab == 'Doctors' ? 'active_button':'']" as="li">
                     <p>Doctors</p>
                 </Link>
-                <Link :href="route('open_notifications')" :class="[navigation.$state.active_tab == 'Notifications' ? 'active_button':'']" as="li">
-                    <p>Notifications</p>
-                </Link>
+<!--                <Link :href="route('open_notifications')" :class="[navigation.$state.active_tab == 'Notifications' ? 'active_button':'']" as="li">-->
+<!--                    <p>Notifications</p>-->
+<!--                </Link>-->
                 <Link :href="route('open_settings')" :class="[navigation.$state.active_tab == 'Settings' ? 'active_button':'']" as="li">
                     <p>Settings</p>
                 </Link>

@@ -69,17 +69,113 @@
                 </section-card>
             </div>
         </div>
+        <template v-slot:mobile >
+
+            <mobile-nav :title="'Appointment'"></mobile-nav>
+
+            <div class="doctor-details shadow-display">
+                <div class="doctor-det">
+                    <div class="h3">{{ appointment.doctors.name }}</div>
+                    <p>{{ appointment.doctors.practice }}</p>
+                </div>
+                <div class="location-display">
+                    <div class="icon">
+
+                    </div>
+                    <p>{{ appointment.doctors.address }}</p>
+                </div>
+            </div>
+            <div class="appointment-details shadow-display">
+                <div class="info-group">
+                    <label for="">Time</label>
+                    <p>{{ appointment.appointment_time }}</p>
+                </div>
+                <div class="info-group">
+                    <label for="">Date</label>
+                    <p>{{ appointment.appointment_dte }}</p>
+                </div>
+            </div>
+
+            <div class="summary section-display">
+                <h2>Summary</h2>
+                <p class="shadow-display">{{ appointment.more_info.summary }}</p>
+            </div>
+            <div class="prescription section-display">
+                <h2>Prescription</h2>
+                <p class="shadow-display">{{ appointment.more_info.prescription }}</p>
+            </div>
+            <div class="reports section-display">
+                <h2>Reports</h2>
+                <ul class="pills-list shadow-display">
+                    <li v-for="report in appointment.reports">{{ (report.file_path).slice(0, 10) }}</li>
+                </ul>
+            </div>
+        </template>
     </Layout>
 </template>
 <script>
 import userCard from "../../../AppComponents/userCard.vue";
 import sectionCard from "../../../AppComponents/sectionCard.vue";
 import axios from "axios";
+import mobileNav from "../../../AppComponents/mobileNav.vue";
 
 export default {
     name: 'view-appointment',
-    props:['appointment'],
+    props: {
+        appointment:{
+            type:Object,
+            default:{
+                id:1,
+                patient_id:4,
+                doctor_id:3,
+                appointment_dte:"2022-09-09",
+                appointment_time:"15:28:00",
+                status:"accepted",
+                created_at:"2022-09-04T12:29:03.000000Z",
+                updated_at:"2023-01-06T11:40:10.000000Z",
+                doctors:{
+                    account_type:"Doctor",
+                    address:"Nairobi CBD",
+                    created_at:"2022-09-04T11:28:14.000000Z",
+                    date_of_birth:"2022-09-04",
+                    email:"doctorone@email.com",
+                    email_verified_at:null,
+                    gender:"Male",
+                    id:3,
+                    name:"Doctor",
+                    notes:"This is doctor one bio",
+                    phone:"0700000000",
+                    practice:"Gynacologist",
+                    profile_photo_path:null,
+                    profile_photo_url:"https://ui-avatars.com/api/?name=D&color=7F9CF5&background=EBF4FF",
+                    two_factor_confirmed_at:null,
+                    updated_at:"2022-09-05T17:55:23.000000Z",
+
+                },
+                patient:{
+                    account_type:"Patient",
+                    address:"Kiambu CBD",
+                    created_at:"2022-09-04T11:30:42.000000Z",
+                    date_of_birth:"2022-09-04",
+                    email:"patientone@email.com",
+                    email_verified_at:null,
+                    gender:"Male",
+                    id:4,
+                    name:"Patient 1",
+                    notes:"This is patient 12",
+                    phone:"0700000000",
+                    practice:null,
+                    profile_photo_path:null,
+                    profile_photo_url:"https://ui-avatars.com/api/?name=P+1&color=7F9CF5&background=EBF4FF",
+                    two_factor_confirmed_at:null,
+                    updated_at:"2022-09-05T17:47:07.000000Z",
+
+                },
+            }
+        }
+    },
     components:{
+        mobileNav,
         userCard,
         sectionCard
     },
@@ -153,5 +249,103 @@ export default {
 
         }
     }
+}
+
+
+
+
+
+.doctor-details{
+    width: 95%;
+    background-color: white;
+    margin: auto;
+    display: flex;
+    margin-bottom: 40px !important;
+
+    .doctor-det{
+        margin: 20px;
+        width: 50%;
+        .h3{
+            font-weight: bolder;
+
+        }
+        p{
+            color: #2bd225;
+            font-weight: bolder;
+        }
+    }
+    .location-display{
+        margin-top: 20px;
+        color: grey;
+        display: flex;
+
+        .icon{
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            background-color: #2bd225;
+        }
+    }
+}
+
+.appointment-details{
+    width: 95%;
+    margin: auto;
+    margin-bottom: 40px !important;
+    .info-group{
+        display: flex;
+        height: 40px;
+        line-height: 40px;
+        label{
+            width: 60px;
+            font-weight: bolder;
+            color: grey;
+        }
+    }
+}
+
+
+.section-display{
+    width: 95%;
+    margin: auto;
+    margin-bottom: 40px;
+    h2{
+        font-weight: bolder;
+        color: grey;
+        margin-bottom: 10px;
+    }
+
+    p{
+        padding: 10px;
+        color: grey;
+    }
+}
+
+
+
+.reports{
+    ul{
+        display: flex;
+        padding: 10px;
+        li{
+            color: white;
+            border-radius: 5px;
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #2bd225;
+        }
+    }
+}
+
+
+
+
+
+
+.shadow-display{
+    box-shadow:  0 2px 9px #c2c2c2;
+    border-radius: 5px;
+    background-color: white;
+    margin-bottom: 10px;
 }
 </style>

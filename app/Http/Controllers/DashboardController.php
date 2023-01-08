@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,14 @@ class DashboardController extends Controller
 {
     public function index(): \Inertia\Response
     {
-        return Inertia::render('Dashboard');
+        $user = Auth::user();
+        $appointment = null;
+
+        if ($user->account_type == "Patient") {
+            $appointment = Appointment::with(['doctors', 'patient'])->where('patient_id', $user->id)->get();
+        }
+        return Inertia::render('Dashboard',[
+            'appointments'=>$appointment
+        ]);
     }
 }
