@@ -16,7 +16,7 @@
 
         <!-- Scripts -->
         @routes
-        @vite('resources/js/app.js','resources/scss/index.scss')
+        @vite('resources/js/app.js')
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
