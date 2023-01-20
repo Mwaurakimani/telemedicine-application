@@ -3,9 +3,7 @@
         <template v-slot:mobile>
             <mobile-nav :title="'Account'"></mobile-nav>
             <div class="user-details">
-                <div class="img-holder">
 
-                </div>
                 <div class="user-text">
                     <h3>{{ $attrs.user.name}}</h3>
                     <p>{{ $attrs.user.email }}</p>
@@ -27,7 +25,7 @@
             </div>
             <button @click="update_user_details">Confirm</button>
 
-            <p style="color: red">Not changing password</p>
+<!--            <p style="color: red">Not changing password</p>-->
 <!--            <div class="password-change">-->
 <!--                <div class="input-group">-->
 <!--                    <label>Password</label>-->
