@@ -1,12 +1,12 @@
 <template>
-    <div id="dashboard-display">
+    <div id="dashboard-display" style="overflow:hidden">
         <side-nav  :key="componentKey" :user="$attrs.user" @reload_comp = 'rerender_component'/>
         <section id="dashboard-content">
             <top-navigation/>
             <slot></slot>
         </section>
     </div>
-    <div class="mobile-view">
+    <div class="mobile-view" style="overflow: auto" >
         <slot name="mobile"></slot>
     </div>
 </template>
